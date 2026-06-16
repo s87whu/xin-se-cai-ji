@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:moodiary/common/models/diary.dart';
+import 'package:xin_se_cai_ji/common/models/diary.dart';
 
 class IsarUtil {
   static late Isar isar;
@@ -8,7 +8,7 @@ class IsarUtil {
   static Future<void> initIsar() async {
     final dir = await getApplicationDocumentsDirectory();
     isar = await Isar.open(
-      [DiarySchema],
+      schemas: [DiarySchema],
       directory: dir.path,
     );
   }

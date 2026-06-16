@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moodiary/common/values/colors.dart';
-import 'package:moodiary/pages/editor/editor_logic.dart';
+import 'package:xin_se_cai_ji/common/values/colors.dart';
+import 'package:xin_se_cai_ji/pages/editor/editor_logic.dart';
 
 class EditorPage extends StatelessWidget {
   const EditorPage({super.key});

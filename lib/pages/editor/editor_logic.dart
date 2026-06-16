@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import 'package:moodiary/common/models/diary.dart';
-import 'package:moodiary/common/values/colors.dart';
-import 'package:moodiary/persistence/isar.dart';
-import 'package:moodiary/utils/notice_util.dart';
+import 'package:xin_se_cai_ji/common/models/diary.dart';
+import 'package:xin_se_cai_ji/common/values/colors.dart';
+import 'package:xin_se_cai_ji/persistence/isar.dart';
+import 'package:xin_se_cai_ji/utils/notice_util.dart';
 
 class EditorLogic extends GetxController {
   late TextEditingController contentController;

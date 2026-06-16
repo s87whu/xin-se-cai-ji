@@ -7,7 +7,7 @@ class NoticeUtil {
     Get.snackbar(
       '提示',
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.bottom,
       margin: const EdgeInsets.all(16),
       duration: const Duration(seconds: 2),
     );
@@ -17,9 +17,9 @@ class NoticeUtil {
     Get.snackbar(
       '成功',
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.bottom,
       margin: const EdgeInsets.all(16),
-      backgroundColor: Colors.green.withOpacity(0.1),
+      backgroundColor: Colors.green.withValues(alpha: 0.1),
       duration: const Duration(seconds: 2),
     );
   }
@@ -28,9 +28,9 @@ class NoticeUtil {
     Get.snackbar(
       '错误',
       message,
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.bottom,
       margin: const EdgeInsets.all(16),
-      backgroundColor: Colors.red.withOpacity(0.1),
+      backgroundColor: Colors.red.withValues(alpha: 0.1),
       duration: const Duration(seconds: 3),
     );
   }
