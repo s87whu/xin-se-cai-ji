@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:moodiary/common/models/diary.dart';
-import 'package:moodiary/persistence/isar.dart';
-import 'package:moodiary/router/app_routes.dart';
+import 'package:xin_se_cai_ji/common/models/diary.dart';
+import 'package:xin_se_cai_ji/persistence/isar.dart';
+import 'package:xin_se_cai_ji/router/app_routes.dart';
 
 class HomeLogic extends GetxController {
   final diaryList = <Diary>[].obs;

@@ -4,7 +4,6 @@ class PrefKeys {
   static const String lock = 'lock';                 // 是否启用锁屏
   static const String password = 'password';         // 锁屏密码
   static const String firstStart = 'firstStart';     // 是否首次启动
-  static const String arkApiKey = 'arkApiKey';       // 火山方舟API Key
-  static const String arkEndpoint = 'arkEndpoint';   // 火山方舟Endpoint
+  static const String deepseekApiKey = 'deepseekApiKey'; // DeepSeek API Key
   static const String fontScale = 'fontScale';       // 字体缩放
 }

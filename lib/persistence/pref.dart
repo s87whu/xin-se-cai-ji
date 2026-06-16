@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:moodiary/common/values/keys.dart';
+import 'package:xin_se_cai_ji/common/values/keys.dart';
 
 class PrefUtil {
   static late SharedPreferences _prefs;
@@ -19,6 +19,10 @@ class PrefUtil {
     if (!_prefs.containsKey(PrefKeys.fontScale)) {
       await _prefs.setDouble(PrefKeys.fontScale, 1.0);
     }
+  }
+
+  static bool containsKey(String key) {
+    return _prefs.containsKey(key);
   }
 
   static T getValue<T>(String key) {
