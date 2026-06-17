@@ -14,7 +14,7 @@ class Api {
     bool showErrorToast = true,
   }) async {
     final body = {
-      'model': 'deep-seek-v4-flash',
+      'model': 'deepseek-chat',
       'messages': messages.map((m) => m.toJson()).toList(),
       'stream': true,
     };

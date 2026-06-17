@@ -39,7 +39,7 @@ class EditorLogic extends GetxController {
     update();
   }
 
-  Future<void> saveDiary() async {
+  void saveDiary() {
     final content = contentController.text.trim();
     if (content.isEmpty) {
       toast.info(message: '请输入日记内容');
@@ -54,9 +54,9 @@ class EditorLogic extends GetxController {
       ..createTime = createTime;
 
     if (editDiaryId != null) {
-      await IsarUtil.updateDiary(diary);
+      IsarUtil.updateDiary(diary);
     } else {
-      await IsarUtil.addDiary(diary);
+      IsarUtil.addDiary(diary);
     }
 
     toast.success(message: '保存成功');

@@ -16,97 +16,85 @@ class IsarUtil {
   // ========== 写操作 ==========
 
   /// 新建日记
-  static Future<void> addDiary(Diary diary) async {
-    await isar.writeTxn(() async {
-      await isar.diarys.put(diary);
-    });
+  static void addDiary(Diary diary) {
+    diary.id = isar.diarys.autoIncrement();
+    isar.diarys.put(diary);
   }
 
   /// 更新日记
-  static Future<void> updateDiary(Diary diary) async {
-    await isar.writeTxn(() async {
-      await isar.diarys.put(diary);
-    });
+  static void updateDiary(Diary diary) {
+    isar.diarys.put(diary);
   }
 
   /// 删除日记
-  static Future<void> deleteDiary(String diaryId) async {
-    await isar.writeTxn(() async {
-      final diary = await isar.diarys
-          .where()
-          .filter()
-          .diaryIdEqualTo(diaryId)
-          .findFirst();
-      if (diary != null) {
-        await isar.diarys.delete(diary.id);
-      }
-    });
+  static void deleteDiary(String diaryId) {
+    final diary =
+        isar.diarys.where().diaryIdEqualTo(diaryId).build().findFirst();
+    if (diary != null) {
+      isar.diarys.delete(diary.id);
+    }
   }
 
   // ========== 读操作 ==========
 
   /// 获取所有日记（按时间倒序）
-  static Future<List<Diary>> getAllDiary() async {
-    return await isar.diarys.where().sortByCreateTimeDesc().findAll();
+  static List<Diary> getAllDiary() {
+    return isar.diarys.where().sortByCreateTimeDesc().build().findAll();
   }
 
   /// 根据diaryId获取日记
-  static Future<Diary?> getDiaryById(String diaryId) async {
-    return await isar.diarys
-        .where()
-        .filter()
-        .diaryIdEqualTo(diaryId)
-        .findFirst();
+  static Diary? getDiaryById(String diaryId) {
+    return isar.diarys.where().diaryIdEqualTo(diaryId).build().findFirst();
   }
 
   /// 搜索日记（内容包含关键字）
-  static Future<List<Diary>> searchDiary(String keyword) async {
-    return await isar.diarys
+  static List<Diary> searchDiary(String keyword) {
+    return isar.diarys
         .where()
-        .filter()
         .contentContains(keyword)
         .sortByCreateTimeDesc()
+        .build()
         .findAll();
   }
 
   /// 获取指定日期范围内的情绪列表
-  static Future<List<double>> getMoodByDateRange(
+  static List<double> getMoodByDateRange(
     DateTime start,
     DateTime end,
-  ) async {
-    final diaries = await isar.diarys
+  ) {
+    final diaries = isar.diarys
         .where()
-        .filter()
         .createTimeBetween(start, end)
-        .sortByCreateTimeAsc()
+        .sortByCreateTime()
+        .build()
         .findAll();
     return diaries.map((d) => d.mood).toList();
   }
 
   /// 获取指定日期范围内的日期列表
-  static Future<List<DateTime>> getDateByDateRange(
+  static List<DateTime> getDateByDateRange(
     DateTime start,
     DateTime end,
-  ) async {
-    final diaries = await isar.diarys
+  ) {
+    final diaries = isar.diarys
         .where()
-        .filter()
         .createTimeBetween(start, end)
-        .sortByCreateTimeAsc()
+        .sortByCreateTime()
+        .build()
         .findAll();
     return diaries.map((d) => d.createTime).toList();
   }
 
   /// 获取指定日期范围内的日记
-  static Future<List<Diary>> getDiariesByDateRange(
+  static List<Diary> getDiariesByDateRange(
     DateTime start,
     DateTime end,
-  ) async {
-    return await isar.diarys
+  ) {
+    return isar.diarys
         .where()
-        .filter()
         .createTimeBetween(start, end)
-        .sortByCreateTimeAsc()
+        .sortByCreateTime()
+        .build()
         .findAll();
   }
 }

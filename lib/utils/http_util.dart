@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
@@ -51,15 +52,23 @@ class HttpUtil {
           responseType: ResponseType.stream,
         ),
       );
-      final stream = response.data?.stream as Stream<List<int>>?;
-      if (stream == null) return null;
-      return stream.transform(
-        StreamTransformer.fromHandlers(
-          handleData: (data, sink) {
-            sink.add(String.fromCharCodes(data));
-          },
-        ),
-      );
+      final rawStream = response.data?.stream as Stream<List<int>>?;
+      if (rawStream == null) return null;
+      // 将原始字节流转为 SSE 事件流：按 \n\n 缓冲，提取 data: 行
+      return rawStream
+          .transform(const Utf8Decoder(allowMalformed: true))
+          .transform(const LineSplitter())
+          .transform<String>(
+            StreamTransformer<String, String>.fromHandlers(
+              handleData: (line, sink) {
+                // 每个 SSE 事件以空行分隔，data: 行携带数据
+                if (line.startsWith('data: ')) {
+                  sink.add(line.substring(6));
+                }
+                // 忽略 event:、id:、retry: 等其他 SSE 字段
+              },
+            ),
+          );
     } catch (e) {
       return null;
     }

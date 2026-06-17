@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:xin_se_cai_ji/common/models/diary.dart';
 import 'package:xin_se_cai_ji/common/values/colors.dart';
 import 'package:xin_se_cai_ji/pages/home/home_logic.dart';
 import 'package:xin_se_cai_ji/router/app_routes.dart';

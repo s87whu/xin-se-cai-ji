@@ -65,27 +65,23 @@ class AssistantLogic extends GetxController {
     final stream = await Api.getDeepSeekChat(apiKey, deepseekMessages);
 
     stream?.listen((content) {
-      if (content != '' && content.contains('data')) {
-        try {
-          final dataPart = content.split('data: ')[1];
-          if (dataPart.trim() != '[DONE]') {
-            final result = DeepSeekResponse.fromJson(jsonDecode(dataPart));
-            if (result.choices != null &&
-                result.choices!.isNotEmpty &&
-                result.choices!.first.delta != null &&
-                result.choices!.first.delta!.content != null) {
-              final current = messages[replyTime]!;
-              messages[replyTime] = _ChatMessage(
-                role: 'assistant',
-                content: current.content + result.choices!.first.delta!.content!,
-              );
-              messages.refresh();
-              _scrollToBottom();
-            }
-          }
-        } catch (e) {
-          // 忽略解析错误
+      if (content.trim() == '[DONE]') return;
+      try {
+        final result = DeepSeekResponse.fromJson(jsonDecode(content));
+        if (result.choices != null &&
+            result.choices!.isNotEmpty &&
+            result.choices!.first.delta != null &&
+            result.choices!.first.delta!.content != null) {
+          final current = messages[replyTime]!;
+          messages[replyTime] = _ChatMessage(
+            role: 'assistant',
+            content: current.content + result.choices!.first.delta!.content!,
+          );
+          messages.refresh();
+          _scrollToBottom();
         }
+      } catch (e) {
+        // 忽略解析错误
       }
     }, onDone: () {
       isGenerating.value = false;

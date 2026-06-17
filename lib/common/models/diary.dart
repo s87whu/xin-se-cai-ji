@@ -4,7 +4,7 @@ part 'diary.g.dart';
 
 @collection
 class Diary {
-  int id = Isar.autoIncrement;
+  int id = 0;
 
   /// 日记唯一标识
   late String diaryId;

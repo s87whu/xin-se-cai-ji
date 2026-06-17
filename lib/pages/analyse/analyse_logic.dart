@@ -25,13 +25,13 @@ class AnalyseLogic extends GetxController {
     super.onReady();
   }
 
-  Future<void> loadData() async {
+  void loadData() {
     finished.value = false;
-    moodList.value = await IsarUtil.getMoodByDateRange(
+    moodList.value = IsarUtil.getMoodByDateRange(
       dateRange[0],
       dateRange[1].add(const Duration(days: 1)),
     );
-    dateList.value = await IsarUtil.getDateByDateRange(
+    dateList.value = IsarUtil.getDateByDateRange(
       dateRange[0],
       dateRange[1].add(const Duration(days: 1)),
     );
@@ -50,7 +50,7 @@ class AnalyseLogic extends GetxController {
     );
     if (picked != null) {
       dateRange.value = [picked.start, picked.end];
-      await loadData();
+      loadData();
     }
   }
 
@@ -87,21 +87,17 @@ class AnalyseLogic extends GetxController {
     );
 
     stream?.listen((content) {
-      if (content != '' && content.contains('data')) {
-        try {
-          final dataPart = content.split('data: ')[1];
-          if (dataPart.trim() != '[DONE]') {
-            final result = DeepSeekResponse.fromJson(jsonDecode(dataPart));
-            if (result.choices != null &&
-                result.choices!.isNotEmpty &&
-                result.choices!.first.delta != null &&
-                result.choices!.first.delta!.content != null) {
-              reply.value += result.choices!.first.delta!.content!;
-            }
-          }
-        } catch (e) {
-          // 忽略解析错误
+      if (content.trim() == '[DONE]') return;
+      try {
+        final result = DeepSeekResponse.fromJson(jsonDecode(content));
+        if (result.choices != null &&
+            result.choices!.isNotEmpty &&
+            result.choices!.first.delta != null &&
+            result.choices!.first.delta!.content != null) {
+          reply.value += result.choices!.first.delta!.content!;
         }
+      } catch (e) {
+        // 忽略解析错误
       }
     }, onDone: () {
       isAnalyzing.value = false;

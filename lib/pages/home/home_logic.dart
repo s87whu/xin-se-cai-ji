@@ -14,19 +14,19 @@ class HomeLogic extends GetxController {
     super.onReady();
   }
 
-  Future<void> loadDiaryList() async {
-    final list = await IsarUtil.getAllDiary();
+  void loadDiaryList() {
+    final list = IsarUtil.getAllDiary();
     diaryList.value = list;
   }
 
-  Future<void> searchDiary(String keyword) async {
+  void searchDiary(String keyword) {
     if (keyword.isEmpty) {
       isSearching.value = false;
       searchResults.clear();
       return;
     }
     isSearching.value = true;
-    searchResults.value = await IsarUtil.searchDiary(keyword);
+    searchResults.value = IsarUtil.searchDiary(keyword);
   }
 
   void toEditor({Diary? diary}) {
@@ -36,8 +36,8 @@ class HomeLogic extends GetxController {
     )?.then((_) => loadDiaryList());
   }
 
-  Future<void> deleteDiary(String diaryId) async {
-    await IsarUtil.deleteDiary(diaryId);
-    await loadDiaryList();
+  void deleteDiary(String diaryId) {
+    IsarUtil.deleteDiary(diaryId);
+    loadDiaryList();
   }
 }
