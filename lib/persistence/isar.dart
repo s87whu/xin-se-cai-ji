@@ -17,13 +17,17 @@ class IsarUtil {
 
   /// 新建日记
   static void addDiary(Diary diary) {
-    diary.id = isar.diarys.autoIncrement();
-    isar.diarys.put(diary);
+    isar.write((isar) {
+      diary.id = isar.diarys.autoIncrement();
+      isar.diarys.put(diary);
+    });
   }
 
   /// 更新日记
   static void updateDiary(Diary diary) {
-    isar.diarys.put(diary);
+    isar.write((isar) {
+      isar.diarys.put(diary);
+    });
   }
 
   /// 删除日记
@@ -31,7 +35,9 @@ class IsarUtil {
     final diary =
         isar.diarys.where().diaryIdEqualTo(diaryId).build().findFirst();
     if (diary != null) {
-      isar.diarys.delete(diary.id);
+      isar.write((isar) {
+        isar.diarys.delete(diary.id);
+      });
     }
   }
 
